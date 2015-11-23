@@ -1,0 +1,308 @@
+diff --git a/app/AppKernel.php b/app/AppKernel.php
+new file mode 100644
+index 0000000..b257337
+--- /dev/null
++++ b/app/AppKernel.php
+@@ -0,0 +1,59 @@
++<?php
++
++use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
++use Symfony\Component\Config\Loader\LoaderInterface;
++use Symfony\Component\DependencyInjection\ContainerBuilder;
++use Symfony\Component\HttpKernel\Kernel;
++use Symfony\Component\Routing\RouteCollectionBuilder;
++use Doctrine\Common\Annotations\AnnotationRegistry;
++
++// require Composer's autoloader
++$loader = require __DIR__.'/../vendor/autoload.php';
++// auto-load annotations
++AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
++
++class AppKernel extends Kernel
++{
++    use MicroKernelTrait;
++
++    public function registerBundles()
++    {
++        $bundles = array(
++            new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
++            new Symfony\Bundle\TwigBundle\TwigBundle(),
++            new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle()
++        );
++
++        if ($this->getEnvironment() == 'dev') {
++            $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
++        }
++
++        return $bundles;
++    }
++
++    protected function configureContainer(ContainerBuilder $c, LoaderInterface $loader)
++    {
++        $loader->load(__DIR__.'/config/config.yml');
++
++        if (isset($this->bundles['WebProfilerBundle'])) {
++            $c->loadFromExtension('web_profiler', array(
++                'toolbar' => true,
++                'intercept_redirects' => false,
++            ));
++        }
++    }
++
++    protected function configureRoutes(RouteCollectionBuilder $routes)
++    {
++        if (isset($this->bundles['WebProfilerBundle'])) {
++            $routes->mount('/_wdt', $routes->import('@WebProfilerBundle/Resources/config/routing/wdt.xml'));
++            $routes->mount('/_profiler', $routes->import('@WebProfilerBundle/Resources/config/routing/profiler.xml'));
++        }
++
++        // load the annotation routes
++        $routes->mount(
++            '/',
++            $routes->import(__DIR__.'/../src/App/Controller/', 'annotation')
++        );
++    }
++}
+diff --git a/app/Resources/views/base.html.twig b/app/Resources/views/base.html.twig
+new file mode 100644
+index 0000000..bafd28d
+--- /dev/null
++++ b/app/Resources/views/base.html.twig
+@@ -0,0 +1,13 @@
++<!DOCTYPE html>
++<html>
++    <head>
++        <meta charset="UTF-8" />
++        <title>{% block title %}Welcome!{% endblock %}</title>
++        {% block stylesheets %}{% endblock %}
++        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
++    </head>
++    <body>
++        {% block body %}{% endblock %}
++        {% block javascripts %}{% endblock %}
++    </body>
++</html>
+diff --git a/app/Resources/views/micro/random.html.twig b/app/Resources/views/micro/random.html.twig
+new file mode 100644
+index 0000000..6fe336c
+--- /dev/null
++++ b/app/Resources/views/micro/random.html.twig
+@@ -0,0 +1,5 @@
++{% extends 'base.html.twig' %}
++
++{% block body %}
++    <h1>Random number: {{ number }}</h1>
++{% endblock %}
+diff --git a/app/config/config.yml b/app/config/config.yml
+new file mode 100644
+index 0000000..6d32cc0
+--- /dev/null
++++ b/app/config/config.yml
+@@ -0,0 +1,5 @@
++framework:
++    secret: S0ME_SECRET
++    templating:
++        engines: ['twig']
++    profiler: { only_exceptions: false }
+\ No newline at end of file
+diff --git a/composer.json b/composer.json
+index 7569a80..dbdb19f 100644
+--- a/composer.json
++++ b/composer.json
+@@ -1,5 +1,11 @@
+ {
+     "require": {
+-        "symfony/symfony": "2.8.*@beta"
++        "symfony/symfony": "2.8.*@beta",
++        "sensio/framework-extra-bundle": "^3.0"
++    },
++    "autoload": {
++        "psr-4": {
++            "": "src/"
++        }
+     }
+ }
+diff --git a/composer.lock b/composer.lock
+index b9fad4d..395dd3d 100644
+--- a/composer.lock
++++ b/composer.lock
+@@ -4,8 +4,8 @@
+         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+         "This file is @generated automatically"
+     ],
+-    "hash": "512f96a27087517e89e9986e0e697b63",
+-    "content-hash": "0be8de3fc39d7b5fb7e38206ac646c86",
++    "hash": "7e98ae46adfa7edddcf572cf3d7ab9e2",
++    "content-hash": "507a41004af3600ec41dac13b1154095",
+     "packages": [
+         {
+             "name": "doctrine/annotations",
+@@ -534,6 +534,61 @@
+             "time": "2012-12-21 11:40:51"
+         },
+         {
++            "name": "sensio/framework-extra-bundle",
++            "version": "v3.0.11",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/sensiolabs/SensioFrameworkExtraBundle.git",
++                "reference": "a79e205737b58d557c05caef6dfa8f94d8084bca"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/sensiolabs/SensioFrameworkExtraBundle/zipball/a79e205737b58d557c05caef6dfa8f94d8084bca",
++                "reference": "a79e205737b58d557c05caef6dfa8f94d8084bca",
++                "shasum": ""
++            },
++            "require": {
++                "doctrine/common": "~2.2",
++                "symfony/framework-bundle": "~2.3|~3.0"
++            },
++            "require-dev": {
++                "symfony/expression-language": "~2.4|~3.0",
++                "symfony/security-bundle": "~2.4|~3.0"
++            },
++            "suggest": {
++                "symfony/expression-language": "",
++                "symfony/psr-http-message-bridge": "To use the PSR-7 converters",
++                "symfony/security-bundle": ""
++            },
++            "type": "symfony-bundle",
++            "extra": {
++                "branch-alias": {
++                    "dev-master": "3.0.x-dev"
++                }
++            },
++            "autoload": {
++                "psr-4": {
++                    "Sensio\\Bundle\\FrameworkExtraBundle\\": ""
++                }
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "authors": [
++                {
++                    "name": "Fabien Potencier",
++                    "email": "fabien@symfony.com"
++                }
++            ],
++            "description": "This bundle provides a way to configure your controllers with annotations",
++            "keywords": [
++                "annotations",
++                "controllers"
++            ],
++            "time": "2015-10-28 15:47:04"
++        },
++        {
+             "name": "symfony/polyfill-intl-icu",
+             "version": "v1.0.0",
+             "source": {
+diff --git a/index.php b/index.php
+deleted file mode 100644
+index 4f535ac..0000000
+--- a/index.php
++++ /dev/null
+@@ -1,55 +0,0 @@
+-<?php
+-
+-use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
+-use Symfony\Component\Config\Loader\LoaderInterface;
+-use Symfony\Component\DependencyInjection\ContainerBuilder;
+-use Symfony\Component\HttpFoundation\JsonResponse;
+-use Symfony\Component\HttpFoundation\Request;
+-use Symfony\Component\HttpKernel\Kernel;
+-use Symfony\Component\Routing\RouteCollectionBuilder;
+-
+-// require Composer's autoloader
+-require __DIR__.'/vendor/autoload.php';
+-
+-
+-class AppKernel extends Kernel
+-{
+-    use MicroKernelTrait;
+-
+-    public function registerBundles()
+-    {
+-        return array(
+-            new Symfony\Bundle\FrameworkBundle\FrameworkBundle()
+-        );
+-    }
+-
+-    protected function configureContainer(ContainerBuilder $c, LoaderInterface $loader)
+-    {
+-        // PHP equivalent of config.yml
+-        $c->loadFromExtension('framework', array(
+-            'secret' => 'S0ME_SECRET',
+-            'templating' => array(
+-                'engines' => array('twig')
+-            ),
+-        ));
+-    }
+-
+-    protected function configureRoutes(RouteCollectionBuilder $routes)
+-    {
+-        // kernel is a service that points to this class
+-        $routes->add('/random/{limit}', 'kernel:randomAction');
+-    }
+-
+-    public function randomAction($limit)
+-    {
+-        return new JsonResponse(array(
+-            'number' => rand(0, $limit)
+-        ));
+-    }
+-}
+-
+-$kernel = new AppKernel('dev', true);
+-$request = Request::createFromGlobals();
+-$response = $kernel->handle($request);
+-$response->send();
+-$kernel->terminate($request, $response);
+diff --git a/src/App/Controller/MicroController.php b/src/App/Controller/MicroController.php
+new file mode 100644
+index 0000000..45e783c
+--- /dev/null
++++ b/src/App/Controller/MicroController.php
+@@ -0,0 +1,21 @@
++<?php
++
++namespace App\Controller;
++
++use Symfony\Bundle\FrameworkBundle\Controller\Controller;
++use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
++
++class MicroController extends Controller
++{
++    /**
++     * @Route("/random/{limit}")
++     */
++    public function randomAction($limit)
++    {
++        $number = rand(0, $limit);
++
++        return $this->render('micro/random.html.twig', array(
++            'number' => $number
++        ));
++    }
++}
+\ No newline at end of file
+diff --git a/web/index.php b/web/index.php
+new file mode 100644
+index 0000000..b66bcb6
+--- /dev/null
++++ b/web/index.php
+@@ -0,0 +1,11 @@
++<?php
++
++use Symfony\Component\HttpFoundation\Request;
++
++require __DIR__.'/../app/AppKernel.php';
++
++$kernel = new AppKernel('dev', true);
++$request = Request::createFromGlobals();
++$response = $kernel->handle($request);
++$response->send();
++$kernel->terminate($request, $response);
+\ No newline at end of file

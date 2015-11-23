@@ -1,0 +1,20 @@
+{
+    "steps": [
+        {
+            "id": "start",
+            "name": "start",
+            "description": null
+        },
+        {
+            "id": "first-simple-appkernel",
+            "name": "First, simple AppKernel",
+            "description": null
+        },
+        {
+            "id": "twig-annotations-profiler",
+            "name": "Twig, annotations, profiler",
+            "description": null
+        }
+    ],
+    "sha": "1a01f705ed07dcafa3647b5d4bce4444102e984f"
+}
