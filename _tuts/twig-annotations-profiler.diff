@@ -1,9 +1,9 @@
 diff --git a/app/AppKernel.php b/app/AppKernel.php
 new file mode 100644
-index 0000000..b257337
+index 0000000..086fca9
 --- /dev/null
 +++ b/app/AppKernel.php
-@@ -0,0 +1,59 @@
+@@ -0,0 +1,56 @@
 +<?php
 +
 +use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
@@ -52,15 +52,12 @@ index 0000000..b257337
 +    protected function configureRoutes(RouteCollectionBuilder $routes)
 +    {
 +        if (isset($this->bundles['WebProfilerBundle'])) {
-+            $routes->mount('/_wdt', $routes->import('@WebProfilerBundle/Resources/config/routing/wdt.xml'));
-+            $routes->mount('/_profiler', $routes->import('@WebProfilerBundle/Resources/config/routing/profiler.xml'));
++            $routes->import('@WebProfilerBundle/Resources/config/routing/wdt.xml', '/_wdt');
++            $routes->import('@WebProfilerBundle/Resources/config/routing/profiler.xml', '/_profiler');
 +        }
 +
 +        // load the annotation routes
-+        $routes->mount(
-+            '/',
-+            $routes->import(__DIR__.'/../src/App/Controller/', 'annotation')
-+        );
++        $routes->import(__DIR__.'/../src/App/Controller/', '/', 'annotation')
 +    }
 +}
 diff --git a/app/Resources/views/base.html.twig b/app/Resources/views/base.html.twig
