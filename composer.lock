@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "512f96a27087517e89e9986e0e697b63",
-    "content-hash": "0be8de3fc39d7b5fb7e38206ac646c86",
+    "hash": "ea1e3d38fa90708b1108330dd25feb02",
+    "content-hash": "1ccbb0b100ad4d1fd65492c27c01d95f",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -449,16 +449,16 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "1.1.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "19f765b66c6fbb56ee3b11bc16d52e38eebdc295"
+                "reference": "a208865a5aeffc2dbbef2a5b3409887272d93f32"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/19f765b66c6fbb56ee3b11bc16d52e38eebdc295",
-                "reference": "19f765b66c6fbb56ee3b11bc16d52e38eebdc295",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/a208865a5aeffc2dbbef2a5b3409887272d93f32",
+                "reference": "a208865a5aeffc2dbbef2a5b3409887272d93f32",
                 "shasum": ""
             },
             "require": {
@@ -493,7 +493,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2015-11-10 00:45:41"
+            "time": "2015-12-01 02:52:15"
         },
         {
             "name": "psr/log",
@@ -927,16 +927,16 @@
         },
         {
             "name": "symfony/security-acl",
-            "version": "v2.7.6",
+            "version": "v2.7.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/security-acl.git",
-                "reference": "8cfb6072e9a4715ec3cedd06a018e6a60cade201"
+                "reference": "9aec8062e33fca5e08d2a78669b2222252e8c3b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/security-acl/zipball/8cfb6072e9a4715ec3cedd06a018e6a60cade201",
-                "reference": "8cfb6072e9a4715ec3cedd06a018e6a60cade201",
+                "url": "https://api.github.com/repos/symfony/security-acl/zipball/9aec8062e33fca5e08d2a78669b2222252e8c3b6",
+                "reference": "9aec8062e33fca5e08d2a78669b2222252e8c3b6",
                 "shasum": ""
             },
             "require": {
@@ -962,7 +962,10 @@
             "autoload": {
                 "psr-4": {
                     "Symfony\\Component\\Security\\Acl\\": ""
-                }
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -980,20 +983,20 @@
             ],
             "description": "Symfony Security Component - ACL (Access Control List)",
             "homepage": "https://symfony.com",
-            "time": "2015-10-12 09:20:33"
+            "time": "2015-11-18 13:41:01"
         },
         {
             "name": "symfony/symfony",
-            "version": "v2.8.0-BETA1",
+            "version": "v2.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "3b99b3a6e71da0f7d3fb07cf5c728ad04a326416"
+                "reference": "5615b92cd452cd54f1433a3f53de87c096a1107f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/3b99b3a6e71da0f7d3fb07cf5c728ad04a326416",
-                "reference": "3b99b3a6e71da0f7d3fb07cf5c728ad04a326416",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/5615b92cd452cd54f1433a3f53de87c096a1107f",
+                "reference": "5615b92cd452cd54f1433a3f53de87c096a1107f",
                 "shasum": ""
             },
             "require": {
@@ -1113,7 +1116,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2015-11-16 09:09:38"
+            "time": "2015-11-30 17:26:10"
         },
         {
             "name": "twig/twig",
@@ -1180,9 +1183,7 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "symfony/symfony": 10
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
