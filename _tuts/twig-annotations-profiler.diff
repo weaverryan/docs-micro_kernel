@@ -1,6 +1,6 @@
 diff --git a/app/AppKernel.php b/app/AppKernel.php
 new file mode 100644
-index 0000000..086fca9
+index 0000000..8ca5b22
 --- /dev/null
 +++ b/app/AppKernel.php
 @@ -0,0 +1,56 @@
@@ -57,7 +57,7 @@ index 0000000..086fca9
 +        }
 +
 +        // load the annotation routes
-+        $routes->import(__DIR__.'/../src/App/Controller/', '/', 'annotation')
++        $routes->import(__DIR__.'/../src/App/Controller/', '/', 'annotation');
 +    }
 +}
 diff --git a/app/Resources/views/base.html.twig b/app/Resources/views/base.html.twig
