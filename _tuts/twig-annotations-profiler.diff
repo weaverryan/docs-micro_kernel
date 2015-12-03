@@ -106,14 +106,14 @@ index 0000000..6d32cc0
 +    profiler: { only_exceptions: false }
 \ No newline at end of file
 diff --git a/composer.json b/composer.json
-index 7569a80..dbdb19f 100644
+index 626d319..6cfe770 100644
 --- a/composer.json
 +++ b/composer.json
 @@ -1,5 +1,11 @@
  {
      "require": {
--        "symfony/symfony": "2.8.*@beta"
-+        "symfony/symfony": "2.8.*@beta",
+-        "symfony/symfony": "^2.8"
++        "symfony/symfony": "^2.8",
 +        "sensio/framework-extra-bundle": "^3.0"
 +    },
 +    "autoload": {
@@ -123,20 +123,9 @@ index 7569a80..dbdb19f 100644
      }
  }
 diff --git a/composer.lock b/composer.lock
-index b9fad4d..395dd3d 100644
+index cfaf41f..a784571 100644
 --- a/composer.lock
 +++ b/composer.lock
-@@ -4,8 +4,8 @@
-         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
-         "This file is @generated automatically"
-     ],
--    "hash": "512f96a27087517e89e9986e0e697b63",
--    "content-hash": "0be8de3fc39d7b5fb7e38206ac646c86",
-+    "hash": "7e98ae46adfa7edddcf572cf3d7ab9e2",
-+    "content-hash": "507a41004af3600ec41dac13b1154095",
-     "packages": [
-         {
-             "name": "doctrine/annotations",
 @@ -534,6 +534,61 @@
              "time": "2012-12-21 11:40:51"
          },
@@ -201,10 +190,10 @@ index b9fad4d..395dd3d 100644
              "source": {
 diff --git a/index.php b/index.php
 deleted file mode 100644
-index 4f535ac..0000000
+index 356adf1..0000000
 --- a/index.php
 +++ /dev/null
-@@ -1,55 +0,0 @@
+@@ -1,52 +0,0 @@
 -<?php
 -
 -use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
@@ -235,9 +224,6 @@ index 4f535ac..0000000
 -        // PHP equivalent of config.yml
 -        $c->loadFromExtension('framework', array(
 -            'secret' => 'S0ME_SECRET',
--            'templating' => array(
--                'engines' => array('twig')
--            ),
 -        ));
 -    }
 -

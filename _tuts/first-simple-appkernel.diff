@@ -1,9 +1,9 @@
 diff --git a/index.php b/index.php
 new file mode 100644
-index 0000000..4f535ac
+index 0000000..356adf1
 --- /dev/null
 +++ b/index.php
-@@ -0,0 +1,55 @@
+@@ -0,0 +1,52 @@
 +<?php
 +
 +use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
@@ -34,9 +34,6 @@ index 0000000..4f535ac
 +        // PHP equivalent of config.yml
 +        $c->loadFromExtension('framework', array(
 +            'secret' => 'S0ME_SECRET',
-+            'templating' => array(
-+                'engines' => array('twig')
-+            ),
 +        ));
 +    }
 +
