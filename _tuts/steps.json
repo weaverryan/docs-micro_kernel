@@ -14,7 +14,12 @@
             "id": "twig-annotations-profiler",
             "name": "Twig, annotations, profiler",
             "description": null
+        },
+        {
+            "id": "multiple-kernels",
+            "name": "Multiple kernels",
+            "description": null
         }
     ],
-    "sha": "09793df7c782ebf5f48b7aae5e65320e6830a5f5"
+    "sha": "7adb971a563a9e15d085bb8ec38d436ef1086828"
 }
