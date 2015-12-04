@@ -5,14 +5,8 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Routing\RouteCollectionBuilder;
-use Doctrine\Common\Annotations\AnnotationRegistry;
 
-// require Composer's autoloader
-$loader = require __DIR__.'/../vendor/autoload.php';
-// auto-load annotations
-AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
-
-class AppKernel extends Kernel
+class WebKernel extends Kernel
 {
     use MicroKernelTrait;
 
@@ -52,5 +46,10 @@ class AppKernel extends Kernel
 
         // load the annotation routes
         $routes->import(__DIR__.'/../src/App/Controller/', '/', 'annotation');
+    }
+
+    public function getCacheDir()
+    {
+        return __DIR__.'/../var/cache/web/'.$this->getEnvironment();
     }
 }
